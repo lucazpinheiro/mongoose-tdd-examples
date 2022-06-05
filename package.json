@@ -1,0 +1,20 @@
+{
+  "name": "users",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "nodemon --exec 'mocha -R min'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "mongoose": "^6.3.5"
+  }
+}
