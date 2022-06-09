@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import PostSchema from './post-schema.js';
 const Schema = mongoose.Schema
 
 // o obejto passado como argumento determina as propriedades e
@@ -12,8 +13,14 @@ const UserSchema = new Schema({
     },
     required: [true, 'Name is required'],
   },
-  postCount: Number,
+  posts: [PostSchema],
+  likes: Number
 });
+
+// necessário usar function keyword para ter acesso ao 'this' model que será instanciado
+UserSchema.virtual('postCount').get(function() {
+  return this.posts.length
+})
 
 // o mongoose.model() é o método do mongoose que cria um modelo
 // 1. primeiro argumento: nome do modelo/collection, caso a collection
