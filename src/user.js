@@ -14,12 +14,27 @@ const UserSchema = new Schema({
     required: [true, 'Name is required'],
   },
   posts: [PostSchema],
-  likes: Number
+  likes: Number,
+  blogPosts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'blogPost' // referencia ao modelo blogPost
+  }]
 });
 
-// necessário usar function keyword para ter acesso ao 'this' model que será instanciado
+// necessário usar function keyword para ter acesso ao 'this' do modelo que será instanciado
 UserSchema.virtual('postCount').get(function() {
   return this.posts.length
+})
+
+// criando um pre hook para eventos de remove
+// necessário usar uma função anônima com function keyword para ter acesso ao 'this' do modelo que será instanciado
+UserSchema.pre('remove', function(next) {
+  // usando mongoose.model para acessar o modelo BlogPost, para evitar de fazer imports desnecessários
+  const BlogPost = mongoose.model('blogPost')
+
+  // $in -> operador de filtro para buscar posts que tenham o id do usuário que está sendo removido
+  BlogPost.remove({ _id: { $in: this.blogPosts } })
+    .then(() => next())
 })
 
 // o mongoose.model() é o método do mongoose que cria um modelo
