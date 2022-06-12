@@ -44,7 +44,6 @@ describe('Associations', () => {
         }
       })
       .then((user) => {
-        console.log(JSON.stringify(user, null, 4))
         assert(user.name === 'Joe')
         assert(user.blogPosts[0].title === 'JS is Great')
         assert(user.blogPosts[0].comments[0].content === 'Congrats on great post')
