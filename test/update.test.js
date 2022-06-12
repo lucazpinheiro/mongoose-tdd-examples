@@ -1,14 +1,10 @@
 import assert from 'assert'
-import mongoose from 'mongoose'
 import User from '../src/user.js'
 
 describe('Updating records', () => {
   let joe
 
   beforeEach((done) => {
-    mongoose.connection.collections.users.drop(() => {
-      // ready to run the next test 
-    })
     joe = new User({ name: 'Joe', likes: 0 })
     joe.save()
       .then(() => done())
